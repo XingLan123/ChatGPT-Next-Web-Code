@@ -38,11 +38,7 @@ function setItem(key: string, value: string) {
 }
 
 function getLanguage() {
-  try {
-    return navigator.language.toLowerCase();
-  } catch {
-    return "cn";
-  }
+  return "cn";
 }
 
 export function getLang(): Lang {

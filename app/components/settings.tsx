@@ -156,7 +156,7 @@ export function Settings(props: { closeSettings: () => void }) {
           </div>
         </div>
         <div className={styles["window-actions"]}>
-          <div className={styles["window-action-button"]}>
+          {/* <div className={styles["window-action-button"]}>
             <IconButton
               icon={<ClearIcon />}
               onClick={() => {
@@ -170,8 +170,8 @@ export function Settings(props: { closeSettings: () => void }) {
               bordered
               title={Locale.Settings.Actions.ClearAll}
             />
-          </div>
-          <div className={styles["window-action-button"]}>
+          </div> */}
+          {/* <div className={styles["window-action-button"]}>
             <IconButton
               icon={<ResetIcon />}
               onClick={() => {
@@ -185,7 +185,7 @@ export function Settings(props: { closeSettings: () => void }) {
               bordered
               title={Locale.Settings.Actions.ResetAll}
             />
-          </div>
+          </div> */}
           <div className={styles["window-action-button"]}>
             <IconButton
               icon={<CloseIcon />}
@@ -221,31 +221,6 @@ export function Settings(props: { closeSettings: () => void }) {
                 <Avatar role="user" />
               </div>
             </Popover>
-          </SettingItem>
-
-          <SettingItem
-            title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}
-            subTitle={
-              checkingUpdate
-                ? Locale.Settings.Update.IsChecking
-                : hasNewVersion
-                ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
-                : Locale.Settings.Update.IsLatest
-            }
-          >
-            {checkingUpdate ? (
-              <div />
-            ) : hasNewVersion ? (
-              <Link href={UPDATE_URL} target="_blank" className="link">
-                {Locale.Settings.Update.GoToUpdate}
-              </Link>
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Update.CheckUpdate}
-                onClick={() => checkUpdate(true)}
-              />
-            )}
           </SettingItem>
 
           <SettingItem title={Locale.Settings.SendKey}>
@@ -285,21 +260,6 @@ export function Settings(props: { closeSettings: () => void }) {
               ))}
             </select>
           </ListItem>
-
-          <SettingItem title={Locale.Settings.Lang.Name}>
-            <select
-              value={getLang()}
-              onChange={(e) => {
-                changeLang(e.target.value as any);
-              }}
-            >
-              {AllLangs.map((lang) => (
-                <option value={lang} key={lang}>
-                  {Locale.Settings.Lang.Options[lang]}
-                </option>
-              ))}
-            </select>
-          </SettingItem>
 
           <SettingItem
             title={Locale.Settings.FontSize.Title}
@@ -366,44 +326,6 @@ export function Settings(props: { closeSettings: () => void }) {
           )}
 
           <SettingItem
-            title={Locale.Settings.Token.Title}
-            subTitle={Locale.Settings.Token.SubTitle}
-          >
-            <PasswordInput
-              value={accessStore.token}
-              type="text"
-              placeholder={Locale.Settings.Token.Placeholder}
-              onChange={(e) => {
-                accessStore.updateToken(e.currentTarget.value);
-              }}
-            />
-          </SettingItem>
-
-          <SettingItem
-            title={Locale.Settings.Usage.Title}
-            subTitle={
-              showUsage
-                ? loadingUsage
-                  ? Locale.Settings.Usage.IsChecking
-                  : Locale.Settings.Usage.SubTitle(
-                      usage?.used ?? "[?]",
-                      usage?.subscription ?? "[?]",
-                    )
-                : Locale.Settings.Usage.NoAccess
-            }
-          >
-            {!showUsage || loadingUsage ? (
-              <div />
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Usage.Check}
-                onClick={checkUsage}
-              />
-            )}
-          </SettingItem>
-
-          <SettingItem
             title={Locale.Settings.HistoryCount.Title}
             subTitle={Locale.Settings.HistoryCount.SubTitle}
           >
@@ -439,38 +361,6 @@ export function Settings(props: { closeSettings: () => void }) {
                 )
               }
             ></input>
-          </SettingItem>
-        </List>
-
-        <List>
-          <SettingItem
-            title={Locale.Settings.Prompt.Disable.Title}
-            subTitle={Locale.Settings.Prompt.Disable.SubTitle}
-          >
-            <input
-              type="checkbox"
-              checked={config.disablePromptHint}
-              onChange={(e) =>
-                updateConfig(
-                  (config) =>
-                    (config.disablePromptHint = e.currentTarget.checked),
-                )
-              }
-            ></input>
-          </SettingItem>
-
-          <SettingItem
-            title={Locale.Settings.Prompt.List}
-            subTitle={Locale.Settings.Prompt.ListCount(
-              builtinCount,
-              customCount,
-            )}
-          >
-            <IconButton
-              icon={<EditIcon />}
-              text={Locale.Settings.Prompt.Edit}
-              onClick={() => showToast(Locale.WIP)}
-            />
           </SettingItem>
         </List>
 

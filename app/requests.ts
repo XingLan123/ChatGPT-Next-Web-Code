@@ -135,7 +135,7 @@ export async function requestChatStream(
     filterBot: options?.filterBot,
   });
 
-  console.log("[Request] ", req);
+  // console.log("[Request] ", req);
 
   const controller = new AbortController();
   const reqTimeoutId = setTimeout(() => controller.abort(), TIME_OUT_MS);
@@ -171,11 +171,11 @@ export async function requestChatStream(
         const resTimeoutId = setTimeout(() => finish(), TIME_OUT_MS);
         const content = await reader?.read();
         clearTimeout(resTimeoutId);
-      
+
         if (!content || !content.value) {
           break;
         }
-      
+
         const text = decoder.decode(content.value, { stream: true });
         responseText += text;
 

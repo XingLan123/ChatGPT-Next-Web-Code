@@ -390,7 +390,11 @@ export const useChatStore = create<ChatStore>()(
 
         // get recent messages
         const recentMessages = get().getMessagesWithMemory();
-        const sendMessages = recentMessages.concat(userMessage);
+        const sendMessagesOld = recentMessages.concat(userMessage);
+        const sendMessages = sendMessagesOld
+          .slice(1)
+          .concat(sendMessagesOld[0]);
+
         const sessionIndex = get().currentSessionIndex;
         const messageIndex = get().currentSession().messages.length + 1;
 
@@ -401,7 +405,7 @@ export const useChatStore = create<ChatStore>()(
         });
 
         // make request
-        console.log("[User Input] ", sendMessages);
+        // console.log("[User Input] ", sendMessages);
         requestChatStream(sendMessages, {
           onMessage(content, done) {
             // stream response
@@ -447,7 +451,7 @@ export const useChatStore = create<ChatStore>()(
         const session = get().currentSession();
 
         return {
-          role: "system",
+          role: "user",
           content: Locale.Store.Prompt.History(session.memoryPrompt),
           date: "",
         } as Message;
@@ -473,7 +477,7 @@ export const useChatStore = create<ChatStore>()(
         const recentMessages = context.concat(
           messages.slice(Math.max(0, n - config.historyMessageCount)),
         );
-
+        // console.log("recentMessages", recentMessages)
         return recentMessages;
       },
 
@@ -534,12 +538,12 @@ export const useChatStore = create<ChatStore>()(
 
         const lastSummarizeIndex = session.messages.length;
 
-        console.log(
-          "[Chat History] ",
-          toBeSummarizedMsgs,
-          historyMsgLength,
-          config.compressMessageLengthThreshold,
-        );
+        // console.log(
+        //   "[Chat History] ",
+        //   toBeSummarizedMsgs,
+        //   historyMsgLength,
+        //   config.compressMessageLengthThreshold,
+        // );
 
         if (historyMsgLength > config.compressMessageLengthThreshold) {
           requestChatStream(
