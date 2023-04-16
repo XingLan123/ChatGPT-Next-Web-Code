@@ -151,8 +151,7 @@ const cn = {
     BotHello: "有什么可以帮你的吗",
     Error: "出错了，稍后重试吧",
     Prompt: {
-      History: (content: string) =>
-        "这是 ai 和用户的历史聊天总结作为前情提要：" + content,
+      History: (content: string) => content,
       Topic:
         "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，如果没有主题，请直接返回“闲聊”",
       Summarize:

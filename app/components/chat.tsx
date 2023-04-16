@@ -484,6 +484,7 @@ export function Chat(props: {
 
   // submit user input
   const onUserSubmit = () => {
+    console.log("[onUserSubmit] ", userInput);
     if (userInput.length <= 0) return;
     setIsLoading(true);
     chatStore.onUserInput(userInput).then(() => setIsLoading(false));
